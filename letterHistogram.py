@@ -7,32 +7,7 @@ with open("eextFile.txt", "rb") as file:
     
 
 e = 0
-frequency_a = []
-frequency_b = []
-frequency_c = []
-frequency_d = []
-frequency_e = []
-frequency_f = []
-frequency_g = []
-frequency_h = []
-frequency_i = []
-frequency_j = []
-frequency_k = []
-frequency_l = []
-frequency_m = []
-frequency_n = []
-frequency_o = []
-frequency_p = []
-frequency_q = []
-frequency_r = []
-frequency_s = []
-frequency_t = []
-frequency_u = []
-frequency_v = []
-frequency_w = []
-frequency_x = []
-frequency_y = []
-frequency_z = []
+frequency = {}
 lines = len(text_lines)
 
 def count_alpha(line):

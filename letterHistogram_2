@@ -1,0 +1,158 @@
+import os
+from matplotlib import pyplot as plt
+
+#script variables
+blacklist = []
+whitelist = []
+
+#starts the script and get user input
+def start_script(blacklist, whitelist):     
+    print("type your comand or 'help' to  view a list of all comands")
+    get_comand(blacklist, whitelist)
+    return
+
+#Finds and reads and splits the arquive in lines
+def get_arq(inpt):
+    x = inpt.split()
+    #needs to verify if has 3 elements in the input
+    with open(x[2], "rb") as file:
+        text = file.read()
+    text_lines = text.splitlines()
+    pop_char_list(inpt, text)
+    return
+
+#reads the entire text and populates char_list with all the possible individual characters in the text
+def pop_char_list(inpt, text):
+    txt = (str(text))
+    charlist = []
+    lenght = len(txt)
+    i = 0
+    while i < lenght:
+        if txt[i] in charlist:
+            i = i + 1
+        else:
+            charlist.append(txt[i])
+            i = i + 1
+    print(charlist)
+    wl_bl_ver(inpt, charlist)
+    return
+
+#verifies if user wants to use whitelist or blacklist and aplies it
+def wl_bl_ver(inpt, charlist):
+    x = inpt.split()
+    if x[1] == "-wl":
+        #uses whitelist
+        print("uses whitelist")
+    if x[1] == "-bl":
+        #uses blacklist
+        print("uses blacklist")
+    else:
+        #uses full charlist
+        print("uses full charlist")
+    return
+
+#adds element to the white list
+def add_wl(inpt, blacklist, whitelist):
+    x = inpt.split('+')     
+    #reads if list already has the element
+    if x[1] in whitelist:
+        print("Whitelist already has this element")
+        get_comand(blacklist, whitelist)
+    else:
+        whitelist.append(x[1])
+        get_comand(blacklist, whitelist)
+    return
+
+
+#prints whitelist elements
+def show_wl(blacklist, whitelist):
+    if len(whitelist) == 0:
+        print("White list is empty")
+    else:
+        print(whitelist)
+    get_comand(blacklist, whitelist)
+    return
+    
+#adds element to the black list
+def add_bl(inpt, blacklist, whitelsit):
+    y = inpt.split('+')     
+    #reads if list already has the element
+    if y[1] in blacklist:
+        print("Blacklist already has this element")
+        get_comand(blacklist, whitelist)
+    else:
+        blacklist.append(y[1])
+        get_comand(blacklist, whitelist)
+    return
+
+
+#prints whitelist elements
+def show_bl(blacklist, whitelist):
+    if len(blacklist) == 0:
+        print("White list is empty")
+    else:
+        print(blacklist)
+    get_comand(blacklist, whitelist)
+    return
+
+   
+#clear whitelist    
+def clear_wl(blacklist, whitelist):
+    whitelist.clear()
+    print("whitelist is now empty")
+    get_comand(blacklist, whitelist)
+    return
+ 
+ 
+#clear blacklist    
+def clear_bl(blacklist, whitelist):
+    blacklist.clear()
+    print("blacklist is now empty")
+    get_comand(blacklist, whitelist)
+    return 
+  
+  
+#Shows the help screen
+def show_help(blacklist, whitelist):
+    print("Help ->\n" +
+              "plot -nl 'arquive path'  -> plots a graph for the arquive in the path input with all the possible elements\n" +
+              "plot -wl 'arquive path'  -> plots a graph for the arquive in the path input only with the elements in the white list\n" +
+              "plot -bl 'arquive path'  -> plots a graph for the arquive in the path input with all the elements except the ones in the black list\n" +
+              "wl +'element'            -> adds the input element to the white list\n" +
+              "bl +'element'            -> adds the input element to the black list\n" +
+              "show wl                  -> shows the elements in the white list\n" + 
+              "show bl                  -> shows the elements in the black list\n" +
+              "clear wl                 -> clears the white list\n" +
+              "clear bl                 -> clears the black list\n" +
+              "help                     -> show all the available comands\n" + 
+              "exit                     -> stops the script")
+    get_comand(blacklist, whitelist)
+    return
+
+
+#get user input
+def get_comand(blacklist, whitelsit):
+    inpt = input()
+    if inpt == 'help':
+        show_help(blacklist, whitelist)
+    if inpt.startswith('plot ') and inpt.endswith('.txt'):
+        get_arq(inpt)
+    if inpt.startswith('wl +'):
+        add_wl(inpt, blacklist, whitelsit)
+    if inpt.startswith('bl +'):
+        add_bl(inpt, blacklist, whitelsit)
+    if inpt == "show wl":
+        show_wl(blacklist, whitelist)
+    if inpt == "show bl":
+        show_bl(blacklist, whitelist)
+    if inpt == "clear wl":
+        clear_wl(blacklist, whitelist)
+    if inpt == "clear bl":
+        clear_bl(blacklist, whitelist)
+    if inpt == "exit":
+        exit()
+    else:
+        get_comand(blacklist, whitelist)
+    return
+
+start_script(blacklist, whitelist)
