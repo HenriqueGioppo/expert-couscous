@@ -1,7 +1,7 @@
-import os
-from matplotlib import pyplot as plt
-
 #script variables
+from numpy import kaiser
+
+
 blacklist = []
 whitelist = []
 
@@ -12,17 +12,20 @@ def start_script(blacklist, whitelist):
     return
 
 #Finds and reads and splits the arquive in lines
-def get_arq(inpt):
+def get_arq(inpt, blacklist, whitelist):
     x = inpt.split()
-    #needs to verify if has 3 elements in the input
-    with open(x[2], "rb") as file:
-        text = file.read()
-    text_lines = text.splitlines()
-    pop_char_list(inpt, text)
-    return
+    elem = len(x)
+    if elem == 3:        
+        with open(x[2], "rb") as file:
+            text = file.read()
+        text_lines = text.splitlines()
+        pop_char_list(inpt, text, text_lines)
+    else:
+        get_comand(blacklist, whitelist)
+
 
 #reads the entire text and populates char_list with all the possible individual characters in the text
-def pop_char_list(inpt, text):
+def pop_char_list(inpt, text, text_lines):
     txt = (str(text))
     charlist = []
     lenght = len(txt)
@@ -33,24 +36,77 @@ def pop_char_list(inpt, text):
         else:
             charlist.append(txt[i])
             i = i + 1
-    print(charlist)
-    wl_bl_ver(inpt, charlist)
-    return
+    x = inpt[1]
+    print(x)
+    #if x == "-nl" or x == "-wl" or x == "-bl":
+    plot_nl(inpt, charlist, text_lines)
+    #else:
+    #    print("invalid comand")
 
-#verifies if user wants to use whitelist or blacklist and aplies it
-def wl_bl_ver(inpt, charlist):
-    x = inpt.split()
+
+#plots graph with using all the possible chars
+def plot_nl(inpt, charlist, text_lines):
+    letter_dict = {}
+    letter_count = []
+    list_line = []   
+    #gets whitelist,blacklist or all the chars
+    x= inpt.split()
     if x[1] == "-wl":
-        #uses whitelist
-        print("uses whitelist")
+        charlist = []
+        charlist = whitelist
     if x[1] == "-bl":
-        #uses blacklist
-        print("uses blacklist")
-    else:
-        #uses full charlist
-        print("uses full charlist")
-    return
-
+        k = 0
+        l = 0
+        while k < len(charlist):
+            while l < len(blacklist):
+                if charlist[k] == blacklist[l]:
+                    charlist.remove(blacklist[l])
+                l = l + 1
+            l = 0
+            k = k + 1
+    i = len(charlist) - 1
+    while i > 0:
+        letter = charlist[i]
+        e = 0
+        while e < len(text_lines):
+            line = str(text_lines[e])
+            a = 0
+            while a < len(line):
+                list_line.append(line[a])
+                a = a + 1
+            letter_count.append(list_line.count(letter)) 
+            list_line = []
+            e = e + 1
+        print(letter)
+        print(letter_count)
+        letter_dict[letter] = letter_count
+        letter_count = []
+        i = i - 1
+    
+    
+def plot_wl(charlist, text_lines):
+    letter_dict = {}
+    letter_count = []
+    list_line = []
+    i = len(charlist) - 1
+    print(charlist)
+    while i > 0:
+        letter = charlist[i]
+        e = 0
+        while e < len(text_lines):
+            line = str(text_lines[e])
+            a = 0
+            while a < len(line):
+                list_line.append(line[a])
+                a = a + 1
+            letter_count.append(list_line.count(letter))
+            e = e + 1
+        print(letter)
+        print(letter_count)
+        letter_dict[letter] = letter_count
+        letter_count = []
+        i = i - 1
+    
 #adds element to the white list
 def add_wl(inpt, blacklist, whitelist):
     x = inpt.split('+')     
@@ -61,7 +117,6 @@ def add_wl(inpt, blacklist, whitelist):
     else:
         whitelist.append(x[1])
         get_comand(blacklist, whitelist)
-    return
 
 
 #prints whitelist elements
@@ -71,7 +126,7 @@ def show_wl(blacklist, whitelist):
     else:
         print(whitelist)
     get_comand(blacklist, whitelist)
-    return
+    
     
 #adds element to the black list
 def add_bl(inpt, blacklist, whitelsit):
@@ -79,11 +134,9 @@ def add_bl(inpt, blacklist, whitelsit):
     #reads if list already has the element
     if y[1] in blacklist:
         print("Blacklist already has this element")
-        get_comand(blacklist, whitelist)
     else:
         blacklist.append(y[1])
-        get_comand(blacklist, whitelist)
-    return
+    get_comand(blacklist, whitelist)
 
 
 #prints whitelist elements
@@ -93,7 +146,6 @@ def show_bl(blacklist, whitelist):
     else:
         print(blacklist)
     get_comand(blacklist, whitelist)
-    return
 
    
 #clear whitelist    
@@ -101,7 +153,6 @@ def clear_wl(blacklist, whitelist):
     whitelist.clear()
     print("whitelist is now empty")
     get_comand(blacklist, whitelist)
-    return
  
  
 #clear blacklist    
@@ -109,7 +160,6 @@ def clear_bl(blacklist, whitelist):
     blacklist.clear()
     print("blacklist is now empty")
     get_comand(blacklist, whitelist)
-    return 
   
   
 #Shows the help screen
@@ -135,23 +185,34 @@ def get_comand(blacklist, whitelsit):
     inpt = input()
     if inpt == 'help':
         show_help(blacklist, whitelist)
+        inpt = ""
     if inpt.startswith('plot ') and inpt.endswith('.txt'):
-        get_arq(inpt)
+        get_arq(inpt, blacklist, whitelist)
+        inpt = ""
     if inpt.startswith('wl +'):
         add_wl(inpt, blacklist, whitelsit)
+        inpt = ""
     if inpt.startswith('bl +'):
         add_bl(inpt, blacklist, whitelsit)
+        inpt = ""
     if inpt == "show wl":
         show_wl(blacklist, whitelist)
+        inpt = ""
     if inpt == "show bl":
         show_bl(blacklist, whitelist)
+        inpt = ""
     if inpt == "clear wl":
         clear_wl(blacklist, whitelist)
+        inpt = ""
     if inpt == "clear bl":
         clear_bl(blacklist, whitelist)
+        inpt = ""
     if inpt == "exit":
         exit()
+    if inpt == "":
+        get_comand(blacklist, whitelist)
     else:
+        print("invalid comand")
         get_comand(blacklist, whitelist)
     return
 
