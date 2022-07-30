@@ -4,10 +4,9 @@ blacklist = []
 whitelist = []
 
 #starts the script and get user input
-def start_script(blacklist, whitelist):     
+def start_script():     
     print("type your comand or 'help' to  view a list of all comands")
-    get_comand(blacklist, whitelist)
-    return
+    get_command(blacklist, whitelist)
 
 #Finds and reads and splits the arquive in lines
 def get_arq(inpt, blacklist, whitelist):
@@ -19,7 +18,7 @@ def get_arq(inpt, blacklist, whitelist):
         text_lines = text.splitlines()
         pop_char_list(inpt, text, text_lines)
     else:
-        get_comand(blacklist, whitelist)
+        get_command(blacklist, whitelist)
 
 
 #reads the entire text and populates char_list with all the possible individual characters in the text
@@ -111,10 +110,10 @@ def add_wl(inpt, blacklist, whitelist):
     #reads if list already has the element
     if x[1] in whitelist:
         print("Whitelist already has this element")
-        get_comand(blacklist, whitelist)
+        get_command(blacklist, whitelist)
     else:
         whitelist.append(x[1])
-        get_comand(blacklist, whitelist)
+        get_command(blacklist, whitelist)
 
 
 #prints whitelist elements
@@ -123,18 +122,18 @@ def show_wl(blacklist, whitelist):
         print("White list is empty")
     else:
         print(whitelist)
-    get_comand(blacklist, whitelist)
+    get_command(blacklist, whitelist)
     
     
 #adds element to the black list
-def add_bl(inpt, blacklist, whitelsit):
+def add_bl(inpt, blacklist, whitelist):
     y = inpt.split('+')     
     #reads if list already has the element
     if y[1] in blacklist:
         print("Blacklist already has this element")
     else:
         blacklist.append(y[1])
-    get_comand(blacklist, whitelist)
+    get_command(blacklist, whitelist)
 
 
 #prints whitelist elements
@@ -143,21 +142,21 @@ def show_bl(blacklist, whitelist):
         print("White list is empty")
     else:
         print(blacklist)
-    get_comand(blacklist, whitelist)
+    get_command(blacklist, whitelist)
 
    
 #clear whitelist    
 def clear_wl(blacklist, whitelist):
     whitelist.clear()
     print("whitelist is now empty")
-    get_comand(blacklist, whitelist)
+    get_command(blacklist, whitelist)
  
  
 #clear blacklist    
 def clear_bl(blacklist, whitelist):
     blacklist.clear()
     print("blacklist is now empty")
-    get_comand(blacklist, whitelist)
+    get_command(blacklist, whitelist)
   
   
 #Shows the help screen
@@ -174,12 +173,11 @@ def show_help(blacklist, whitelist):
               "clear bl                 -> clears the black list\n" +
               "help                     -> show all the available comands\n" + 
               "exit                     -> stops the script")
-    get_comand(blacklist, whitelist)
-    return
+    get_command(blacklist, whitelist)
 
 
 #get user input
-def get_comand(blacklist, whitelsit):
+def get_command(blacklist, whitelist):
     inpt = input()
     if inpt == 'help':
         show_help(blacklist, whitelist)
@@ -188,10 +186,10 @@ def get_comand(blacklist, whitelsit):
         get_arq(inpt, blacklist, whitelist)
         inpt = ""
     if inpt.startswith('wl +'):
-        add_wl(inpt, blacklist, whitelsit)
+        add_wl(inpt, blacklist, whitelist)
         inpt = ""
     if inpt.startswith('bl +'):
-        add_bl(inpt, blacklist, whitelsit)
+        add_bl(inpt, blacklist, whitelist)
         inpt = ""
     if inpt == "show wl":
         show_wl(blacklist, whitelist)
@@ -208,10 +206,9 @@ def get_comand(blacklist, whitelsit):
     if inpt == "exit":
         exit()
     if inpt == "":
-        get_comand(blacklist, whitelist)
+        get_command(blacklist, whitelist)
     else:
         print("invalid comand")
-        get_comand(blacklist, whitelist)
-    return
+        get_command(blacklist, whitelist)
 
-start_script(blacklist, whitelist)
+start_script()
