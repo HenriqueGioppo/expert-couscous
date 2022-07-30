@@ -41,7 +41,7 @@ def pop_char_list(inpt, text, text_lines):
     #    print("invalid comand")
 
 
-#plots graph with using all the possible chars
+#plots graph with using the chosen command
 def plot_nl(inpt, charlist, text_lines):
     letter_dict = {}
     letter_count = []
