@@ -182,30 +182,30 @@ def get_command(blacklist, whitelist):
     if inpt == 'help':
         show_help(blacklist, whitelist)
         inpt = ""
-    if inpt.startswith('plot ') and inpt.endswith('.txt'):
+    elif inpt.startswith('plot ') and inpt.endswith('.txt'):
         get_arq(inpt, blacklist, whitelist)
         inpt = ""
-    if inpt.startswith('wl +'):
+    elif inpt.startswith('wl +'):
         add_wl(inpt, blacklist, whitelist)
         inpt = ""
-    if inpt.startswith('bl +'):
+    elif inpt.startswith('bl +'):
         add_bl(inpt, blacklist, whitelist)
         inpt = ""
-    if inpt == "show wl":
+    elif inpt == "show wl":
         show_wl(blacklist, whitelist)
         inpt = ""
-    if inpt == "show bl":
+    elif inpt == "show bl":
         show_bl(blacklist, whitelist)
         inpt = ""
-    if inpt == "clear wl":
+    elif inpt == "clear wl":
         clear_wl(blacklist, whitelist)
         inpt = ""
-    if inpt == "clear bl":
+    elif inpt == "clear bl":
         clear_bl(blacklist, whitelist)
         inpt = ""
-    if inpt == "exit":
+    elif inpt == "exit":
         exit()
-    if inpt == "":
+    elif inpt == "":
         get_command(blacklist, whitelist)
     else:
         print("invalid comand")
