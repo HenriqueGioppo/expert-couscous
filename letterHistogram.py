@@ -79,6 +79,7 @@ def plot_nl(inpt, charlist, text_lines):
         letter_dict[letter] = letter_count
         letter_count = []
         i = i - 1
+    get_command(blacklist, whitelist)
     
     
 def plot_wl(charlist, text_lines):
@@ -103,6 +104,7 @@ def plot_wl(charlist, text_lines):
         letter_dict[letter] = letter_count
         letter_count = []
         i = i - 1
+    get_command(blacklist, whitelist)
     
 #adds element to the white list
 def add_wl(inpt, blacklist, whitelist):
