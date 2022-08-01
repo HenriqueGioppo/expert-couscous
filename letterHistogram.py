@@ -50,7 +50,11 @@ def plot_nl(inpt, charlist, text_lines):
     x= inpt.split()
     if x[1] == "-wl":
         charlist = []
-        charlist = whitelist
+        charlist.append("x")
+        m = 0
+        while m < len(whitelist):
+            charlist.append(whitelist[m])
+            m = m + 1
     if x[1] == "-bl":
         k = 0
         l = 0
@@ -81,31 +85,6 @@ def plot_nl(inpt, charlist, text_lines):
         i = i - 1
     get_command(blacklist, whitelist)
     
-    
-def plot_wl(charlist, text_lines):
-    letter_dict = {}
-    letter_count = []
-    list_line = []
-    i = len(charlist) - 1
-    print(charlist)
-    while i > 0:
-        letter = charlist[i]
-        e = 0
-        while e < len(text_lines):
-            line = str(text_lines[e])
-            a = 0
-            while a < len(line):
-                list_line.append(line[a])
-                a = a + 1
-            letter_count.append(list_line.count(letter))
-            e = e + 1
-        print(letter)
-        print(letter_count)
-        letter_dict[letter] = letter_count
-        letter_count = []
-        i = i - 1
-    get_command(blacklist, whitelist)
-    
 #adds element to the white list
 def add_wl(inpt, blacklist, whitelist):
     x = inpt.split('+')     
@@ -121,7 +100,7 @@ def add_wl(inpt, blacklist, whitelist):
 #prints whitelist elements
 def show_wl(blacklist, whitelist):
     if len(whitelist) == 0:
-        print("White list is empty")
+        print("Whitelist is empty")
     else:
         print(whitelist)
     get_command(blacklist, whitelist)
@@ -141,7 +120,7 @@ def add_bl(inpt, blacklist, whitelist):
 #prints whitelist elements
 def show_bl(blacklist, whitelist):
     if len(blacklist) == 0:
-        print("White list is empty")
+        print("Blacklist is empty")
     else:
         print(blacklist)
     get_command(blacklist, whitelist)
@@ -150,14 +129,14 @@ def show_bl(blacklist, whitelist):
 #clear whitelist    
 def clear_wl(blacklist, whitelist):
     whitelist.clear()
-    print("whitelist is now empty")
+    print("Whitelist is now empty")
     get_command(blacklist, whitelist)
  
  
 #clear blacklist    
 def clear_bl(blacklist, whitelist):
     blacklist.clear()
-    print("blacklist is now empty")
+    print("Blacklist is now empty")
     get_command(blacklist, whitelist)
   
   
