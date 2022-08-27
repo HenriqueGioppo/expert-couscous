@@ -35,13 +35,13 @@ def exec_calc(number_one, num_one, number_two, num_two, operation):
     if operation == "+":
         result = number_one + number_two
         print_result(num_one, num_two, operation, result)
-    if operation == "-":
+    elif operation == "-":
         result = number_one - number_two
         print_result(num_one, num_two, operation, result)
-    if operation == "*":
+    elif operation == "*":
         result = number_one * number_two
         print_result(num_one, num_two, operation, result)
-    if operation == "/":
+    elif operation == "/":
         result = number_one / number_two
         print_result(num_one, num_two, operation, result)
     return result
@@ -59,7 +59,7 @@ def continue_exec():
     continue_calc = continue_calc.upper()
     if continue_calc == 'Y':
         get_input_numOne()
-    if continue_calc == 'N':
+    elif continue_calc == 'N':
         print("\nGood bye!")
         exit()
     else:
