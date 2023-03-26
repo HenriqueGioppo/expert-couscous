@@ -1,0 +1,23 @@
+#in python create a file called test in the desktop folder
+
+import os
+
+#create a file called test.txt in the desktop folder
+def createFile():
+    #if the file already exists, delete it
+    if os.path.exists(os.path.join(os.path.expanduser('~'), 'Desktop', 'test.txt')):
+        os.remove(os.path.join(os.path.expanduser('~'), 'Desktop', 'test.txt'))
+        print("file deleted")
+
+    path = os.path.join(os.path.expanduser('~'), 'Desktop')
+    file = open(os.path.join(path, 'test.txt'), 'w')
+    file.close()
+
+    #get running processes in this computer
+    processes = os.popen('tasklist').read()
+    #write the processes to the file
+    file = open(os.path.join(path, 'test.txt'), 'w')
+    file.write(processes)
+    file.close()
+
+createFile()
